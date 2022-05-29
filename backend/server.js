@@ -1,12 +1,13 @@
-const express = require('express');
-const colors = require('colors');
-const morgan = require('morgan');
+import express from 'express';
+import colors from 'colors';
+import morgan from 'morgan';
 
-const cors = require('cors');
-const { readdirSync } = require('fs');
-const dotenv = require('dotenv');
+import cors from 'cors';
+import { readdirSync } from 'fs';
+import dotenv from 'dotenv';
 dotenv.config();
-const configDB = require('./config/db');
+import configDB from './config/db.js';
+import userRoutes from './routes/user.js';
 
 const app = express();
 app.use(express.json());
@@ -17,7 +18,7 @@ app.use(morgan('dev'));
 configDB();
 
 //routes
-readdirSync('./routes').map((r) => app.use('/', require('./routes/' + r)));
+readdirSync('./routes').map((r) => app.use('/', userRoutes));
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

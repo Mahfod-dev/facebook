@@ -1,9 +1,10 @@
-const { validateEmail, validateUsername } = require('../helpers/validation');
-const User = require('../models/User');
-const { sendVerificationEmail } = require('../helpers/mailer');
-const { StatusCodes } = require('http-status-codes');
+import { validateEmail, validateUsername } from '../helpers/validation.js';
+import User from '../models/User.js';
+import { sendVerificationEmail } from '../helpers/mailer.js';
+import { StatusCodes } from 'http-status-codes';
+import jwt from 'jsonwebtoken';
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const {
       first_name,
@@ -63,5 +64,22 @@ exports.register = async (req, res) => {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: error.message });
+  }
+};
+export const activateAccount = async (req, res) => {
+  const { token } = req.body;
+  const user = jwt.verify(token, process.env.TOKEN_SECRET);
+
+  const checkUser = await User.findById(user.id);
+
+  if (checkUser.verified === true) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: 'Email is already activated' });
+  } else {
+    await User.findByIdAndUpdate(user.id, { verified: true });
+    return res.status(StatusCodes.CREATED).json({
+      message: 'Account has been activated successfully',
+    });
   }
 };

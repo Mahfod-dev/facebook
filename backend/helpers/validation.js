@@ -1,6 +1,6 @@
-const User = require('../models/User');
+import User from '../models/User.js';
 
-exports.validateEmail = (email) => {
+export const validateEmail = (email) => {
   return String(email)
     .toLowerCase()
     .match(/^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,12})(\.[a-z]{2,12})?$/);
@@ -12,7 +12,7 @@ exports.validateEmail = (email) => {
 //   return true;
 // };
 
-exports.validateUsername = async (username) => {
+export const validateUsername = async (username) => {
   let a = false;
 
   do {
