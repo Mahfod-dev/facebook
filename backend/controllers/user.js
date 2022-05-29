@@ -83,3 +83,40 @@ export const activateAccount = async (req, res) => {
     });
   }
 };
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    console.log(user);
+    if (!user) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        message: 'Email address is not availaible',
+      });
+    }
+    const isMatch = await user.comparePassword(password);
+    console.log(isMatch);
+
+    if (!isMatch) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        message: 'Invalid Credentials',
+      });
+    }
+    const token = user.createJWT({ id: user._id.toString() });
+
+    res.status(StatusCodes.CREATED).json({
+      id: user._id,
+      username: user.username,
+      picture: user.picture,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      token: token,
+      verified: user.verified,
+      message: 'Login Success !',
+    });
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+    });
+  }
+};

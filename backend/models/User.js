@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 const { ObjectId } = mongoose.Schema;
 
-const userSchema = mongoose.Schema(
+const UserSchema = mongoose.Schema(
   {
     first_name: {
       type: String,
@@ -152,18 +152,23 @@ const userSchema = mongoose.Schema(
   }
 );
 
-userSchema.pre('save', async function () {
+UserSchema.pre('save', async function () {
   const user = this;
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
 });
 
-userSchema.methods.createJWT = function (payload) {
+UserSchema.methods.createJWT = function (payload) {
   return jwt.sign(payload, process.env.TOKEN_SECRET, {
     expiresIn: process.env.JWT_LIFE,
   });
 };
 
-const User = mongoose.model('User', userSchema);
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);
+  return isMatch;
+};
+
+const User = mongoose.model('User', UserSchema);
 
 export default User;
