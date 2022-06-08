@@ -91,7 +91,8 @@ export const login = async (req, res) => {
     console.log(user);
     if (!user) {
       res.status(StatusCodes.BAD_REQUEST).json({
-        message: 'Email address is not availaible',
+        message:
+          'Email not found! Please register or log with an different email ',
       });
     }
     const isMatch = await user.comparePassword(password);

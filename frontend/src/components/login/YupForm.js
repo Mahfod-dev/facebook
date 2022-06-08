@@ -23,3 +23,11 @@ export const registerValidation = Yup.object({
     .min(6, 'Password must be atleast 6 characters.')
     .max(36, "Password can't be more than 36 characters"),
 });
+
+export const loginValidation = Yup.object({
+  email: Yup.string()
+    .required('Email address is required.')
+    .email('Must be a valid email.')
+    .max(100),
+  password: Yup.string().required('Password is required'),
+});

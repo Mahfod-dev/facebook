@@ -1,26 +1,34 @@
-import { Form, Formik } from 'formik';
-import { useState } from 'react';
-import RegisterInput from '../inputs/registerInput';
-import { DotLoader } from 'react-spinners';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { storeUser } from '../../features/userSlice';
+import { register } from '../../features/userSlice';
+
+import { toast } from 'react-toastify';
+import { DotLoader } from 'react-spinners';
+import { Form, Formik } from 'formik';
 import { registerValidation } from './YupForm';
+import Cookies from 'js-cookie';
+
+import RegisterInput from '../inputs/registerInput';
 import DateOfBirthSelect from './DateOfBirthSelect';
 import GenderSelect from './GenderSelect';
+import { toogleSignin } from '../../features/userSlice';
 
-import axios from 'axios';
 export default function RegisterForm() {
   // Setup info user
   const userInfos = {
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
+    first_name: 'karim',
+    last_name: 'belha',
+    email: 'xifag23022@dilanfa.com',
+    password: '1234567',
     bYear: new Date().getFullYear(),
     bMonth: new Date().getMonth() + 1,
     bDay: new Date().getDate(),
-    gender: '',
+    gender: 'male',
   };
-  const [user, setUser] = useState(userInfos);
+  const [userData, setUserData] = useState(userInfos);
   const {
     first_name,
     last_name,
@@ -30,12 +38,37 @@ export default function RegisterForm() {
     bMonth,
     bDay,
     gender,
-  } = user;
+  } = userData;
+
+  const { user, isLoading, isError, isSuccess, message } =
+    useSelector(storeUser);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess && user) {
+      setTimeout(() => {
+        toast.success(message);
+        navigate('/');
+      });
+    }
+    Cookies.set('user', JSON.stringify(user));
+  }, [user, isSuccess, isError, navigate, message]);
+
   //Register User
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUserData({ ...userData, [name]: value });
   };
+
+  const handleClick = () => {
+    dispatch(toogleSignin());
+  };
+
   //Date Form
   const yearTemp = new Date().getFullYear();
   const years = Array.from(new Array(108), (val, index) => yearTemp - index);
@@ -49,42 +82,18 @@ export default function RegisterForm() {
   const [dateError, setDateError] = useState('');
   const [genderError, setGenderError] = useState('');
 
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(false);
-
-
-
-  console.log(process.env.REACT_APP_URL);
   //Form fetch data
-  const registerSubmit = async () => {
-    setLoading(true);
-    try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_URL}/register`,
-        {
-          ...user,
-        }
-      );
-      console.log(data);
-      setError('');
-      setTimeout(() => {
-        setSuccess(data.message);
-      }, 1000);
-
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setSuccess('');
-      setError(error.response.data.message);
-    }
+  const registerSubmit = () => {
+    const { message, ...data } = userData;
+    //left message data
+    dispatch(register(data));
   };
 
   return (
     <div className="blur">
       <div className="register">
         <div className="register_header">
-          <i className="exit_icon"></i>
+          <i className="exit_icon" onClick={handleClick}></i>
           <span>Sign Up</span>
           <span>it's quick and easy</span>
         </div>
@@ -190,11 +199,11 @@ export default function RegisterForm() {
                 notifications from us and can opt out at any time.
               </div>
               <div className="reg_btn_wrapper">
-                <button className="blue_btn open_signup">Sign Up</button>
+                <button type="submit" className="blue_btn open_signup">
+                  Sign Up
+                </button>
               </div>
-              <DotLoader color="#1876f2" loading={loading} size={30} />
-              {error && <div className="error_text">{error}</div>}
-              {success && <div className="success_text">{success}</div>}
+              <DotLoader color="#1876f2" loading={isLoading} size={30} />
             </Form>
           )}
         </Formik>

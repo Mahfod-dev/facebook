@@ -1,30 +1,62 @@
-import { Formik, Form } from "formik";
-import { Link } from "react-router-dom";
-import * as Yup from "yup";
-import LoginInput from "../../components/inputs/loginInput";
-import { useState } from "react";
+import { useEffect } from 'react';
+import { Formik, Form } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { toogleSignin } from '../../features/userSlice';
+import { storeUser } from '../../features/userSlice';
+import { loginValidation } from './YupForm';
+import LoginInput from '../../components/inputs/loginInput';
+import { useState } from 'react';
+import { login } from '../../features/userSlice';
+import { toast } from 'react-toastify';
+import { DotLoader } from 'react-spinners';
+import Cookies from 'js-cookie';
+
+//initial state
 const loginInfos = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
+
 export default function LoginForm() {
-  const [login, setLogin] = useState(loginInfos);
-  const { email, password } = login;
+  const [isLogin, setIsLogin] = useState(loginInfos);
+  const { email, password } = isLogin;
+
+  const { user, isError, message, isSuccess, isLoading } =
+    useSelector(storeUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      toast.success(message);
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+    }
+    Cookies.set('user', JSON.stringify(user));
+  }, [user, isSuccess, message, isError, navigate]);
+
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
-    setLogin({ ...login, [name]: value });
+    setIsLogin({ ...isLogin, [name]: value });
   };
-  const loginValidation = Yup.object({
-    email: Yup.string()
-      .required("Email address is required.")
-      .email("Must be a valid email.")
-      .max(100),
-    password: Yup.string().required("Password is required"),
-  });
+
+  const handleClick = () => {
+    dispatch(toogleSignin());
+  };
+
+  const handleSubmit = () => {
+    dispatch(login(isLogin));
+  };
+
   return (
     <div className="login_wrap">
       <div className="login_1">
-        <img src="../../icons/facebook.svg" alt="" />
+        <img src="../../icons/facebook.svg" alt="facebook-logo" />
         <span>
           Facebook helps you connect and share with the people in your life.
         </span>
@@ -38,6 +70,9 @@ export default function LoginForm() {
               password,
             }}
             validationSchema={loginValidation}
+            onSubmit={() => {
+              handleSubmit();
+            }}
           >
             {(formik) => (
               <Form>
@@ -54,9 +89,13 @@ export default function LoginForm() {
                   onChange={handleLoginChange}
                   bottom
                 />
-                <button type="submit" className="blue_btn">
-                  Log In
-                </button>
+                {isSuccess ? (
+                  <DotLoader color="#1876f2" loading={isLoading} size={30} />
+                ) : (
+                  <button type="submit" className="blue_btn">
+                    Log In
+                  </button>
+                )}
               </Form>
             )}
           </Formik>
@@ -64,7 +103,9 @@ export default function LoginForm() {
             Forgotten password?
           </Link>
           <div className="sign_splitter"></div>
-          <button className="blue_btn open_signup">Create Account</button>
+          <button className="blue_btn open_signup" onClick={handleClick}>
+            Create Account
+          </button>
         </div>
         <Link to="/" className="sign_extra">
           <b>Create a Page</b> for a celebrity, brand or business.

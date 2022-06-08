@@ -17,10 +17,12 @@ app.use(morgan('dev'));
 //database
 configDB();
 
+console.log(process.env.PORT);
 //routes
-readdirSync('./routes').map((r) => app.use('/', userRoutes));
+// readdirSync('./routes').map((r) => app.use('/', userRoutes));
+app.use('/', userRoutes);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log(`server is running on port ${PORT}..`);
+  console.log(`server is running on port ${PORT}..`.green);
 });
