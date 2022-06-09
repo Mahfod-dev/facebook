@@ -72,3 +72,20 @@ a {
 .hover2:hover {
   background: var(--bg-third);
 }
+/* Card */
+.card {
+  height: 500px;
+  width: 500px;
+  background: red;
+}
+
+/* ScrollBar */
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 15px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #000;
+  border-radius: 15px;
+}

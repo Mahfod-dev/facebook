@@ -17,6 +17,7 @@ import {
   ArrowDown,
 } from '../../svg';
 import SearchMenu from './SearchMenu';
+import AllMenu from './AllMenu';
 
 const color = '#65676b';
 const Header = () => {
@@ -70,6 +71,7 @@ const Header = () => {
         </Link>
         <div className="circle_icon">
           <Menu />
+          <AllMenu />
         </div>
         <div className="circle_icon">
           <Messenger />
