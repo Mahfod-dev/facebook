@@ -1,7 +1,8 @@
 import './styles.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { storeUser } from '../../features/userSlice';
+import { toogleSignin } from '../../features/userSlice';
 import {
   Logo,
   Search,
@@ -15,10 +16,16 @@ import {
   Notifications,
   ArrowDown,
 } from '../../svg';
+import SearchMenu from './SearchMenu';
 
 const color = '#65676b';
 const Header = () => {
-  const { user } = useSelector(storeUser);
+  const { user, isModal } = useSelector(storeUser);
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(toogleSignin());
+  };
 
   return (
     <header>
@@ -28,7 +35,7 @@ const Header = () => {
             <Logo />
           </div>
         </Link>
-        <div className="search search1">
+        <div className="search search1" onClick={handleClick}>
           <Search color={color} />
           <input
             type="text"
@@ -37,6 +44,7 @@ const Header = () => {
           />
         </div>
       </div>
+      {isModal && <SearchMenu onClick={handleClick} isModal={isModal} />}
       <div className="header_middle">
         <Link to="/" className="middle_icon active">
           <HomeActive />

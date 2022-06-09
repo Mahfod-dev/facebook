@@ -11,6 +11,7 @@ export default function Login() {
   const dispatch = useDispatch();
 
   const handleClick = (e) => {
+    console.log(e.target);
     if (e.target.className.includes('blur')) {
       dispatch(toogleSignin());
     }
