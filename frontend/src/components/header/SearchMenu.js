@@ -9,15 +9,6 @@ const SearchMenu = ({ color, onClick, isModal }) => {
     input.current.focus();
   }, []);
 
-  const handle = (e) => {
-    console.log(e.target);
-    console.log(window);
-    // if (e.target.className.includes('blur')) {
-    //   console.log('heelo');
-    //   // dispatch(toogleSignin());
-    // }
-  };
-
   return (
     <div className="header_left search_area scrollbar">
       <div className="search_wrap">
