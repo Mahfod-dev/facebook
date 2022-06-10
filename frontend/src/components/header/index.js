@@ -2,7 +2,8 @@ import './styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { storeUser } from '../../features/userSlice';
-import { toogleSignin } from '../../features/userSlice';
+import { toggleModal } from '../../features/userSlice';
+
 import {
   Logo,
   Search,
@@ -15,6 +16,7 @@ import {
   Messenger,
   Notifications,
   ArrowDown,
+  User,
 } from '../../svg';
 import SearchMenu from './SearchMenu';
 import AllMenu from './AllMenu';
@@ -25,7 +27,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(toogleSignin());
+    dispatch(toggleModal());
   };
 
   return (
@@ -66,7 +68,14 @@ const Header = () => {
       </div>
       <div className="header_right">
         <Link className="profile_link hover1" to="/profile">
-          <img src={user?.picture} alt="profile" />
+          {user?.profile === null ? (
+            <img src={user?.picture} alt="profile" />
+          ) : (
+            <div className="circle_icon">
+              <User color={color} />
+            </div>
+          )}
+
           <span>{user?.first_name}</span>
         </Link>
         <div className="circle_icon">

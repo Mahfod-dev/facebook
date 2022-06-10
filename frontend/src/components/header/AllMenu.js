@@ -1,4 +1,4 @@
-import { menu, create } from '../../data/allMenu';
+import { create } from '../../data/allMenu';
 import AllMenuGroup from './AllMenuGroup';
 
 const AllMenu = () => {
@@ -38,8 +38,8 @@ const AllMenu = () => {
 
         <div className="all_right">
           <div className="all_right_header">Create</div>
-          {create.map((item) => (
-            <div className="all_right_item hover1">
+          {create.map((item, index) => (
+            <div key={index} className="all_right_item hover1">
               <div className="all_right_circle">
                 <i className={item.icon}></i>
               </div>

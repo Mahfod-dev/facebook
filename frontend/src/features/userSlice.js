@@ -17,7 +17,6 @@ export const register = createAsyncThunk(
   '/user/register',
   async (user, thunkAPI) => {
     try {
-      console.log(user);
       return await userService.registerUser(user);
     } catch (error) {
       const message =
@@ -34,7 +33,6 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk('/user/login', async (user, thunkAPI) => {
   try {
-    console.log(user);
     return await userService.loginUser(user);
   } catch (error) {
     const message =
@@ -50,7 +48,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    toogleSignin(state) {
+    toggleModal(state) {
       state.isModal = !state.isModal;
     },
     reset(state) {
@@ -66,8 +64,6 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(register.fulfilled, (state, action) => {
-      console.log(state);
-      console.log(action);
       state.isLoading = false;
       state.isSuccess = true;
       state.message = action.payload.message;
@@ -99,5 +95,5 @@ export const userSlice = createSlice({
 
 export const storeUser = (state) => state.user;
 
-export const { toogleSignin } = userSlice.actions;
+export const { toggleModal } = userSlice.actions;
 export default userSlice.reducer;

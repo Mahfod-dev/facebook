@@ -14,7 +14,7 @@ import Cookies from 'js-cookie';
 import RegisterInput from '../inputs/registerInput';
 import DateOfBirthSelect from './DateOfBirthSelect';
 import GenderSelect from './GenderSelect';
-import { toogleSignin } from '../../features/userSlice';
+import { toggleModal } from '../../features/userSlice';
 
 export default function RegisterForm() {
   // Setup info user
@@ -66,7 +66,7 @@ export default function RegisterForm() {
   };
 
   const handleClick = () => {
-    dispatch(toogleSignin());
+    dispatch(toggleModal());
   };
 
   //Date Form

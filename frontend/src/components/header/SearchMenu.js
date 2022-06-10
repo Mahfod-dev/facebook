@@ -4,7 +4,7 @@ import { Return, Search } from '../../svg';
 
 const SearchMenu = ({ color, onClick, isModal }) => {
   const input = useRef(null);
-  console.log(isModal);
+
   useEffect(() => {
     input.current.focus();
   }, []);

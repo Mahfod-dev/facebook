@@ -103,6 +103,7 @@ header {
 
 .header_right {
   display: flex;
+  align-items: center;
   position: absolute;
   right: 8px;
   top: 50%;

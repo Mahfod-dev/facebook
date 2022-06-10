@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Formik, Form } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { toogleSignin } from '../../features/userSlice';
+import { toggleModal } from '../../features/userSlice';
 import { storeUser } from '../../features/userSlice';
 import { loginValidation } from './YupForm';
 import LoginInput from '../../components/inputs/loginInput';
@@ -46,7 +46,7 @@ export default function LoginForm() {
   };
 
   const handleClick = () => {
-    dispatch(toogleSignin());
+    dispatch(toggleModal());
   };
 
   const handleSubmit = () => {

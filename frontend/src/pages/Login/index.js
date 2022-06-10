@@ -4,16 +4,15 @@ import { storeUser } from '../../features/userSlice';
 import LoginForm from '../../components/login/LoginForm';
 import Footer from '../../components/footer/Footer';
 import RegisterForm from '../../components/login/RegisterForm';
-import { toogleSignin } from '../../features/userSlice';
+import { toggleModal } from '../../features/userSlice';
 
 export default function Login() {
   const { isModal } = useSelector(storeUser);
   const dispatch = useDispatch();
 
   const handleClick = (e) => {
-    console.log(e.target);
     if (e.target.className.includes('blur')) {
-      dispatch(toogleSignin());
+      dispatch(toggleModal());
     }
   };
 
