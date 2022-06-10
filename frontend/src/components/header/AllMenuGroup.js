@@ -1,4 +1,4 @@
-import { menu, create } from '../../data/allMenu';
+import { menu } from '../../data/allMenu';
 import AllMenuItem from './AllMenuItem';
 
 const AllMenuGroup = ({ title, firstSlice, secondSlice }) => {

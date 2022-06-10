@@ -1,8 +1,10 @@
 import './styles.css';
+import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { storeUser } from '../../features/userSlice';
 import { toggleModal } from '../../features/userSlice';
+import useClickOutside from '../../helpers/clickOutside';
 
 import {
   Logo,
@@ -21,17 +23,22 @@ import {
 import SearchMenu from './SearchMenu';
 import AllMenu from './AllMenu';
 import { useState } from 'react';
+import UserMenu from './userMenu';
 
 const color = '#65676b';
 const Header = () => {
   const { user, isModal } = useSelector(storeUser);
   const dispatch = useDispatch();
 
+  const element = useRef(null);
+
   const [showMenu, setShowMenu] = useState(false);
 
   const handleClick = () => {
     dispatch(toggleModal());
   };
+
+  useClickOutside(element, () => setShowMenu(false));
 
   const handleShowMenu = () => {
     setShowMenu(() => !showMenu);
@@ -85,7 +92,7 @@ const Header = () => {
 
           <span>{user?.first_name}</span>
         </Link>
-        <div className="circle_icon" onClick={handleShowMenu}>
+        <div className="circle_icon" ref={element} onClick={handleShowMenu}>
           <Menu />
           {showMenu && <AllMenu />}
         </div>
@@ -98,6 +105,7 @@ const Header = () => {
         </div>
         <div className="circle_icon">
           <ArrowDown />
+          <UserMenu user={user} />
         </div>
       </div>
     </header>
