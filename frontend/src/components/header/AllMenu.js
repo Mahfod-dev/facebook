@@ -1,9 +1,16 @@
+import { useRef } from 'react';
+import useClickOutside from '../../helpers/clickOutside';
 import { create } from '../../data/allMenu';
 import AllMenuGroup from './AllMenuGroup';
 
 const AllMenu = () => {
+  const element = useRef(null);
+  useClickOutside(element, () => {
+    element.current.style.display = 'none';
+  });
+
   return (
-    <div className="all_menu">
+    <div className="all_menu" ref={element}>
       <div className="all_menu_header">Menu</div>
       <div className="all_menu_wrap scrollbar">
         <div className="all_left">

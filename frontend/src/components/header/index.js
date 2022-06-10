@@ -20,14 +20,21 @@ import {
 } from '../../svg';
 import SearchMenu from './SearchMenu';
 import AllMenu from './AllMenu';
+import { useState } from 'react';
 
 const color = '#65676b';
 const Header = () => {
   const { user, isModal } = useSelector(storeUser);
   const dispatch = useDispatch();
 
+  const [showMenu, setShowMenu] = useState(false);
+
   const handleClick = () => {
     dispatch(toggleModal());
+  };
+
+  const handleShowMenu = () => {
+    setShowMenu(() => !showMenu);
   };
 
   return (
@@ -50,7 +57,7 @@ const Header = () => {
       {isModal && <SearchMenu onClick={handleClick} isModal={isModal} />}
       <div className="header_middle">
         <Link to="/" className="middle_icon active">
-          <HomeActive />
+          <HomeActive onClick={handleClick} />
         </Link>
         <Link to="/" className="middle_icon hover1">
           <Friends color={color} />
@@ -78,9 +85,9 @@ const Header = () => {
 
           <span>{user?.first_name}</span>
         </Link>
-        <div className="circle_icon">
+        <div className="circle_icon" onClick={handleShowMenu}>
           <Menu />
-          <AllMenu />
+          {showMenu && <AllMenu />}
         </div>
         <div className="circle_icon">
           <Messenger />
