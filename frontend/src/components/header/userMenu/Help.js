@@ -1,9 +1,9 @@
 import React from 'react';
 import uuid from 'react-uuid';
-import { setting } from '../../../data/submenu';
+import { helper } from '../../../data/submenu';
 
-const SettingPrivacy = () => {
-  const settingMenu = setting.map((setValue) => {
+const Help = () => {
+  const settingMenu = helper.map((setValue) => {
     return (
       <div key={uuid()} className="mmenu_item hover3">
         <div className="small_circle">{setValue.icon}</div>
@@ -14,4 +14,4 @@ const SettingPrivacy = () => {
 
   return <>{settingMenu}</>;
 };
-export default SettingPrivacy;
+export default Help;

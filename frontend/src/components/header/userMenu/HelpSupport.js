@@ -1,3 +1,5 @@
+import Help from './Help';
+
 const HelpSupport = ({ submenu }) => {
   return (
     <div className="absolute_wrap">
@@ -12,24 +14,7 @@ const HelpSupport = ({ submenu }) => {
         </div>
         Help & Support
       </div>
-      <div className="mmenu_item hover3">
-        <div className="small_circle">
-          <i className="help_center_icon"></i>
-        </div>
-        <span>Help Center</span>
-      </div>
-      <div className="mmenu_item hover3">
-        <div className="small_circle">
-          <i className="email_icon"></i>
-        </div>
-        <span>Support Inbox</span>
-      </div>
-      <div className="mmenu_item hover3">
-        <div className="small_circle">
-          <i className="info_filled_icon"></i>
-        </div>
-        <span>Report a Problem</span>
-      </div>
+      <Help />
     </div>
   );
 };

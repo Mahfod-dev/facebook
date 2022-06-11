@@ -33,6 +33,7 @@ const Header = () => {
   const element = useRef(null);
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showUser, setShowUser] = useState(false);
 
   const handleClick = () => {
     dispatch(toggleModal());
@@ -41,7 +42,11 @@ const Header = () => {
   useClickOutside(element, () => setShowMenu(false));
 
   const handleShowMenu = () => {
-    setShowMenu(() => !showMenu);
+    setShowMenu((prevState) => !prevState);
+  };
+
+  const handleShowUser = () => {
+    setShowUser((prevState) => !prevState);
   };
 
   return (
@@ -103,9 +108,9 @@ const Header = () => {
           <Notifications />
           <div className="right_notification">5</div>
         </div>
-        <div className="circle_icon">
+        <div className="circle_icon" onClick={handleShowUser}>
           <ArrowDown />
-          <UserMenu user={user} />
+          {showUser && <UserMenu user={user} />}
         </div>
       </div>
     </header>

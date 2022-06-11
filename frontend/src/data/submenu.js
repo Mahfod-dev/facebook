@@ -25,3 +25,17 @@ export const setting = [
     icon: <i className="language_icon margin"></i>,
   },
 ];
+export const helper = [
+  {
+    title: 'helper',
+    icon: <i className="help_center_icon margin"></i>,
+  },
+  {
+    title: 'Support Inbox',
+    icon: <i className="email_icon margin"></i>,
+  },
+  {
+    title: 'Report a problem',
+    icon: <i className="info_filled_icon margin"></i>,
+  },
+];

@@ -1,18 +1,33 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import SettingsPrivacy from './SettingsPrivacy';
 import DisplayAccessibilty from './DisplayAccessibilty';
+import useClickOutside from '../../../helpers/clickOutside';
 import HelpSupport from './HelpSupport';
+import { User } from '../../../svg';
 
+const color = '#65676b';
 const UserMenu = ({ user }) => {
   const [showSubMenu, setShowSubmenu] = useState(0);
 
+  const closeUserMenu = useRef(null);
+
+  useClickOutside(closeUserMenu, () => {
+    closeUserMenu.current.style.display = 'none';
+  });
+
   return (
-    <div className="mmenu">
+    <div className="mmenu" ref={closeUserMenu}>
       {showSubMenu === 0 && (
         <div>
           <Link to="/profile" className="mmenu_header hover3">
-            <img src={user?.picture} alt="" />
+            {user?.profile === null ? (
+              <img src={user?.picture} alt="profile" />
+            ) : (
+              <div className="circle_icon">
+                <User color={color} />
+              </div>
+            )}
             <div className="mmenu_col">
               <span>
                 {user?.first_name}
