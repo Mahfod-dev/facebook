@@ -9,12 +9,6 @@ const SettingsPrivacy = ({ submenu }) => {
         </div>
         Settings & privacy
       </div>
-      <div className="mmenu_item hover3">
-        <div className="small_circle">
-          <i className="settings_filled_icon margin"></i>
-        </div>
-        <span>Settings</span>
-      </div>
       <SettingPrivacy />
     </div>
   );

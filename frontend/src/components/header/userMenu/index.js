@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SettingsPrivacy from './SettingsPrivacy';
+import DisplayAccessibilty from './DisplayAccessibilty';
+import HelpSupport from './HelpSupport';
 
 const UserMenu = ({ user }) => {
   const [showSubMenu, setShowSubmenu] = useState(0);
@@ -39,7 +41,7 @@ const UserMenu = ({ user }) => {
               <i className="right_icon margin"></i>
             </div>
           </div>
-          <div className="mmenu_item hover3">
+          <div className="mmenu_item hover3" onClick={() => setShowSubmenu(2)}>
             <div className="small_circle">
               <i className="help_filled_icon margin"></i>
             </div>
@@ -48,7 +50,7 @@ const UserMenu = ({ user }) => {
               <i className="right_icon margin"></i>
             </div>
           </div>
-          <div className="mmenu_item hover3">
+          <div className="mmenu_item hover3" onClick={() => setShowSubmenu(3)}>
             <div className="small_circle">
               <i className="dark_filled_icon margin"></i>
             </div>
@@ -66,6 +68,8 @@ const UserMenu = ({ user }) => {
         </div>
       )}
       {showSubMenu === 1 && <SettingsPrivacy submenu={setShowSubmenu} />}
+      {showSubMenu === 2 && <HelpSupport submenu={setShowSubmenu} />}
+      {showSubMenu === 3 && <DisplayAccessibilty submenu={setShowSubmenu} />}
     </div>
   );
 };
