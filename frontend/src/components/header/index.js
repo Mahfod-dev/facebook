@@ -46,7 +46,7 @@ const Header = () => {
   };
 
   const handleShowUser = () => {
-    setShowUser((prevState) => !prevState);
+    setShowUser(!showUser);
   };
 
   return (
@@ -108,8 +108,10 @@ const Header = () => {
           <Notifications />
           <div className="right_notification">5</div>
         </div>
-        <div className="circle_icon" onClick={handleShowUser}>
-          <ArrowDown />
+        <div className="circle_icon">
+          <div onClick={handleShowUser}>
+            <ArrowDown />
+          </div>
           {showUser && <UserMenu user={user} />}
         </div>
       </div>

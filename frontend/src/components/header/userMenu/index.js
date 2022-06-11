@@ -15,7 +15,7 @@ const UserMenu = ({ user }) => {
   useClickOutside(closeUserMenu, () => {
     closeUserMenu.current.style.display = 'none';
   });
-
+  console.log(showSubMenu);
   return (
     <div className="mmenu" ref={closeUserMenu}>
       {showSubMenu === 0 && (
