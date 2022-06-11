@@ -1,8 +1,10 @@
-const SettingsPrivacy = () => {
+import SettingPrivacy from './SettingPrivacy';
+
+const SettingsPrivacy = ({ submenu }) => {
   return (
     <div className="absolute_wrap">
       <div className="absolute_wrap_header">
-        <div className="circle">
+        <div className="circle" onClick={() => submenu(0)}>
           <i className="arrow_back_icon"></i>
         </div>
         Settings & privacy
@@ -13,6 +15,7 @@ const SettingsPrivacy = () => {
         </div>
         <span>Settings</span>
       </div>
+      <SettingPrivacy />
     </div>
   );
 };
