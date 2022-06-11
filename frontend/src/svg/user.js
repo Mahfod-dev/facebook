@@ -3,7 +3,7 @@ import React from 'react';
 function User({ color }) {
   return (
     <svg
-      style={{ width: '20px', height: '20px' }}
+      style={{ width: '20px', height: '20px', fill: color }}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
     >
